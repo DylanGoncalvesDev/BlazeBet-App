@@ -15,10 +15,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-      if (auth()->check() && auth()->user()->role === 'admin') {
-          return $next($request);
-      }
+        if (auth()->check() && auth()->user()->role === 'admin') {
+            return $next($request);
+        }
 
-      return redirect()->route('dashboard')->with('danger', 'No tienes permisos para entrar aquí.');
+        return redirect()->route('dashboard')->with('danger', 'No tienes permisos para entrar aquí.');
     }
 }
