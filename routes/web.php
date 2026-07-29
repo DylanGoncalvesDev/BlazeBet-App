@@ -1,8 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompetitionController;
-
+use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
 
