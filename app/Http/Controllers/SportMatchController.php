@@ -12,6 +12,16 @@ use Illuminate\Http\Request;
 class SportMatchController extends Controller
 {
     //
+    public function index(): View|RedirectResponse
+    {
+        if (auth()->user() && auth()->user()->role === 'admin') {
+            return redirect()->route('admin.matches.index');
+        }
+        $matches = SportMatch::with(['homeTeam', 'awayTeam'])->get();
+
+        return view('matches.index', compact('matches'));
+    }
+
     public function create(): View
     {
         $teams = Team::all();
