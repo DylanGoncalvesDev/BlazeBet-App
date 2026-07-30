@@ -98,4 +98,51 @@ class PredictionController extends Controller
 
         return redirect()->back()->with('danger', 'Predicción eliminada.');
     }
+
+    public function filter(Request $request): View
+    {
+        $query = Prediction::where('predictions.user_id', auth()->id());
+
+        if ($request->input('result') === 'correct') {
+            $query->where('points', '=', '8');
+        }
+
+        if ($request->input('result') === 'correct_winner') {
+            $query->where('points', '=', '1');
+        }
+
+        if ($request->input('result') === 'correct_score') {
+            $query->where('points', '=', '6');
+        }
+
+        if ($request->input('result') === 'correct_home_score') {
+            $query->join('matches', 'predictions.match_id', '=', 'matches.id')->whereColumn('predictions.home_score_prediction', 'matches.home_team_score');
+        }
+
+        if ($request->input('result') === 'correct_away_score') {
+            $query->join('matches', 'predictions.match_id', '=', 'matches.id')->whereColumn('predictions.away_score_prediction', 'matches.away_team_score');
+        }
+
+        if ($request->input('result') === 'incorrect') {
+            $query->where('points', '=', '0');
+        }
+
+        if ($request->input('result') === 'newest') {
+            $query->orderBy('predictions.created_at', 'desc');
+        }
+
+        if ($request->input('result') === 'oldest') {
+            $query->orderBy('predictions.created_at', 'asc');
+        }
+
+        if ($request->filled('specific_date')) {
+            $query->whereDate('predictions.created_at', '=', (string) $request->input('specific_date'));
+        }
+
+        $predictions = $query->select('predictions.*')
+            ->with(['match.homeTeam', 'match.awayTeam'])
+            ->get();
+
+        return view('predictions.index', compact('predictions'));
+    }
 }
