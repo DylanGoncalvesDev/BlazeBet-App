@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('founded_at');
             $table->enum('type', ['national', 'club']);
             $table->enum('sport', ['american football', 'soccer football', 'rugby', 'basketball', 'baseball',
-                                   'cricket', 'softball', 'volleyball', 'hockey', 'handball', 'futsal']);
+                'cricket', 'softball', 'volleyball', 'hockey', 'handball', 'futsal']);
             $table->timestamps();
         });
     }

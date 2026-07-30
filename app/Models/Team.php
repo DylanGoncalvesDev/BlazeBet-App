@@ -8,5 +8,4 @@ class Team extends Model
 {
     //
     protected $fillable = ['name', 'Logo', 'country', 'founded_at', 'type', 'sport'];
-
 }
