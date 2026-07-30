@@ -115,4 +115,47 @@ class SportMatchController extends Controller
 
         return redirect()->route('matches.index')->with('danger', 'The Match has been deleted successfuly');
     }
+
+    public function filter(Request $request): View
+    {
+        $query = SportMatch::query();
+
+        if ($request->input('result') === 'upcoming') {
+            $query->where('status', '=', 'upcoming');
+        }
+
+        if ($request->input('result') === 'live') {
+            $query->where('status', '=', 'live');
+        }
+
+        if ($request->input('result') === 'finished') {
+            $query->where('status', '=', 'finished');
+        }
+
+        if ($request->filled('search_team')) {
+            $wantedTeam = (string) $request->input('search_team');
+            $query->join('teams as home', 'matches.home_team_id', '=', 'home.id')
+                ->join('teams as away', 'matches.away_team_id', '=', 'away.id')
+                ->where(function ($q) use ($wantedTeam) {
+                    $q->where('home.name', 'LIKE', '%'.$wantedTeam.'%')
+                        ->orWhere('away.name', 'LIKE', '%'.$wantedTeam.'%');
+                });
+        }
+
+        if ($request->input('result') === 'newest') {
+            $query->orderBy('matches.created_at', 'desc');
+        }
+
+        if ($request->input('result') === 'oldest') {
+            $query->orderBy('matches.created_at', 'asc');
+        }
+
+        if ($request->filled('specific_date')) {
+            $query->whereDate('matches.date', '=', (string) $request->input('specific_date'));
+        }
+
+        $matches = $query->select('matches.*')->with(['homeTeam', 'awayTeam'])->get();
+
+        return view('matches.index', compact('matches'));
+    }
 }
