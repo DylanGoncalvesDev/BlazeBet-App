@@ -50,7 +50,6 @@ class CompetitionController extends Controller
 
     public function update(Request $request, Competition $competition): RedirectResponse
     {
-        $competition = Competition::findOrFail($id);
 
         $request->validate([
             'name' => 'required|string|max:60|unique:competitions,name,'.$competition->id,
