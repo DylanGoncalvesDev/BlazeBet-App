@@ -53,10 +53,10 @@ class CompetitionController extends Controller
 
         $request->validate([
             'name' => [
-            'required',
-            'string',
-            'max:60',
-            Rule::unique('competitions', 'name')->ignore($competition->id),
+                'required',
+                'string',
+                'max:60',
+                Rule::unique('competitions', 'name')->ignore($competition->id),
             ],
             'status' => 'required|string|in:not_started,in_progress,finished',
             'description' => 'nullable|string|max:500',
