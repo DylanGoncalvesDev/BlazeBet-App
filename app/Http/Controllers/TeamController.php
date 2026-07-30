@@ -10,6 +10,13 @@ use Illuminate\Http\Request;
 class TeamController extends Controller
 {
     //
+    public function index(): View
+    {
+        $teams = Team::all();
+
+        return view('teams.index', compact('teams'));
+    }
+
     public function create(): View
     {
         return view('teams.create');
