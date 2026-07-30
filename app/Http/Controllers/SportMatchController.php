@@ -22,6 +22,13 @@ class SportMatchController extends Controller
         return view('matches.index', compact('matches'));
     }
 
+    public function adminIndex(): View
+    {
+        $matches = SportMatch::with(['homeTeam', 'awayTeam'])->get();
+
+        return view('admin.matches.index', compact('matches'));
+    }
+
     public function welcome(): View
     {
         $matches = SportMatch::with(['homeTeam', 'awayTeam'])->get();
