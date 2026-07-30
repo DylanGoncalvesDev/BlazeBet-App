@@ -74,4 +74,12 @@ class CompetitionController extends Controller
 
         return redirect()->route('competitions.index')->with('success', '¡Competition updated successfully!');
     }
+
+    public function destroy(Competition $competition): RedirectResponse
+    {
+
+        $competition->delete();
+
+        return redirect()->route('competitions.index')->with('danger', 'Competition deleted successfully');
+    }
 }
