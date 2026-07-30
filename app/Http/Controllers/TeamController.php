@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SportMatch;
 use App\Models\Team;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -78,5 +79,20 @@ class TeamController extends Controller
         ]);
 
         return redirect()->route('teams.index')->with('success', '¡Team updated successfully!');
+    }
+
+    public function destroy(Team $team): RedirectResponse
+    {
+
+        $hasMatches = SportMatch::where('home_team_id', $team->getKey())
+            ->orWhere('away_team_id', $team->getKey())
+            ->exists();
+
+        if ($hasMatches) {
+            return redirect()->back()->with('danger', 'No se puede eliminar un equipo que ya tiene partidos registrados.');
+        }
+        $team->delete();
+
+        return redirect()->route('teams.index')->with('danger', 'Team deleted successfully');
     }
 }
