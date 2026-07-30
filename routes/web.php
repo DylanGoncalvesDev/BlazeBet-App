@@ -15,6 +15,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/matches/create', [SportMatchController::class, 'create'])->name('matches.create');
     Route::post('/matches', [SportMatchController::class, 'store'])->name('matches.store');
 
+    Route::get('/matches/{id}/edit', [SportMatchController::class, 'edit'])->name('matches.edit');
+    Route::put('/matches/{id}', [SportMatchController::class, 'update'])->name('matches.update');
+
     Route::resource('competitions', CompetitionController::class);
     Route::resource('teams', TeamController::class);
 });

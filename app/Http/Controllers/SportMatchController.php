@@ -60,4 +60,43 @@ class SportMatchController extends Controller
 
         return redirect()->route('matches.index')->with('success', '¡The Match has been created successfuly!');
     }
+
+    public function edit(Request $request, $id): View
+    {
+        $sportMatch = SportMatch::findOrFail($id);
+
+        return view('matches.edit', compact('sportMatch'));
+    }
+
+    public function update(Request $request, $id): RedirectResponse
+    {
+        $sportMatch = SportMatch::findOrFail($id);
+        $request->validate([
+            'home_team_id' => 'required|exists:teams,id',
+            'away_team_id' => 'required|exists:teams,id|different:home_team_id',
+            'date' => 'required|date',
+            'location' => 'required|string',
+            'stage' => 'required|string',
+            'status' => 'required|in:upcoming,live,finished',
+            'home_team_score' => 'nullable|integer|min:0|max:999',
+            'away_team_score' => 'nullable|integer|min:0|max:999',
+            'sport' => 'required|string|in:american football,soccer football,rugby,basketball,baseball,cricket,softball,volleyball,hockey,handball,futsal',
+            'competition_id' => 'required|exists:competitions,id',
+        ]);
+
+        $sportMatch->update([
+            'home_team_id' => $request->home_team_id,
+            'away_team_id' => $request->away_team_id,
+            'date' => $request->date,
+            'location' => $request->location,
+            'stage' => $request->stage,
+            'status' => $request->status,
+            'home_team_score' => $request->home_team_score,
+            'away_team_score' => $request->away_team_score,
+            'sport' => $request->sport,
+            'competition_id' => $request->competition_id,
+        ]);
+
+        return redirect()->back()->with('success', 'The Match has been updated successfuly');
+    }
 }
