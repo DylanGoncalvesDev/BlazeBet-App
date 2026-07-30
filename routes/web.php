@@ -8,6 +8,7 @@ Route::view('/', 'welcome')->name('home');
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/competitions', [CompetitionController::class, 'index'])->name('competitions.index');
     Route::resource('competitions', CompetitionController::class);
+    Route::resource('teams', TeamController::class);
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
