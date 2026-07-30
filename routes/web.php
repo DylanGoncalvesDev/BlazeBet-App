@@ -17,6 +17,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/matches/{id}/edit', [SportMatchController::class, 'edit'])->name('matches.edit');
     Route::put('/matches/{id}', [SportMatchController::class, 'update'])->name('matches.update');
+    Route::delete('/matches/{id}', [SportMatchController::class, 'destroy'])->name('matches.destroy');
 
     Route::resource('competitions', CompetitionController::class);
     Route::resource('teams', TeamController::class);
