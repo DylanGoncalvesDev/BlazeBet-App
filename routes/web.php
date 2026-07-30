@@ -26,6 +26,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Route::get('/matches', [SportMatchController::class, 'index'])->name('matches.index');
     Route::get('/matches/{id}', [SportMatchController::class, 'show'])->name('matches.show');
+
+    Route::resource('predictions', PredictionController::class);
 });
 
 require __DIR__.'/settings.php';
