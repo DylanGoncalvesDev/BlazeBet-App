@@ -61,13 +61,13 @@ class SportMatchController extends Controller
         return redirect()->route('matches.index')->with('success', '¡The Match has been created successfuly!');
     }
 
-    public function edit(Request $request, SportMatch $match): View
+    public function edit(SportMatch $sportMatch): View
     {
 
         return view('matches.edit', compact('sportMatch'));
     }
 
-    public function update(Request $request, SportMatch $match): RedirectResponse
+    public function update(Request $request, SportMatch $sportMatch): RedirectResponse
     {
         $request->validate([
             'home_team_id' => 'required|exists:teams,id',
