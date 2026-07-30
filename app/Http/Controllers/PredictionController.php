@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Prediction;
 use App\Models\SportMatch;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class PredictionController extends Controller
@@ -19,6 +21,7 @@ class PredictionController extends Controller
 
         $match = SportMatch::findOrFail($request->match_id);
 
+          /** @var \App\Models\SportMatch $match */
         if (now()->greaterThanOrEqualTo($match->date)) {
             return redirect()->back()->with('danger', '¡El partido ya comenzó o ha finalizado! No puedes realizar predicciones.');
         }

@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Prediction extends Model
 {
-    /**
-     * @var array<int, string>
+     /**
+     * @var list<string>
      */
     protected $fillable = [
         'user_id',
