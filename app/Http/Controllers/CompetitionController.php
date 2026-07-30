@@ -10,6 +10,13 @@ use Illuminate\Http\Request;
 class CompetitionController extends Controller
 {
     //
+    public function index(): View
+    {
+        $competitions = Competition::all();
+
+        return view('competitions.index', compact('competitions'));
+    }
+
     public function create(): View
     {
         return view('competitions.create');
