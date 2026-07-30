@@ -7,7 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class TeamsController extends Controller
+class TeamController extends Controller
 {
     //
     public function create(): View
