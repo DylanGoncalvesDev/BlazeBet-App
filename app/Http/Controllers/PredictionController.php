@@ -10,6 +10,14 @@ use Illuminate\Http\Request;
 class PredictionController extends Controller
 {
     //
+
+    public function index(): View
+    {
+        $predictions = Prediction::where('user_id', auth()->id())->get();
+
+        return view('predictions.index', compact('predictions'));
+    }
+
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
