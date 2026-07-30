@@ -30,6 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/matches/{id}', [SportMatchController::class, 'show'])->name('matches.show');
 
     Route::resource('predictions', PredictionController::class);
+    Route::get('/predictions-filter', [PredictionController::class, 'filter'])->name('predictions.filter');
 });
 
 require __DIR__.'/settings.php';
