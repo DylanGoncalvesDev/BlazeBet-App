@@ -97,4 +97,15 @@ class SportMatchController extends Controller
 
         return redirect()->back()->with('success', 'The Match has been updated successfuly');
     }
+
+    public function destroy(SportMatch $sportMatch): RedirectResponse
+    {
+        /** @var SportMatch $sportMatch */
+        if ($sportMatch->predictions()->exists()) {
+            return redirect()->back()->with('danger', 'No se puede eliminar un partido que ya tiene predicciones de usuarios.');
+        }
+        $sportMatch->delete();
+
+        return redirect()->route('matches.index')->with('danger', 'The Match has been deleted successfuly');
+    }
 }
