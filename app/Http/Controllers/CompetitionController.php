@@ -43,14 +43,12 @@ class CompetitionController extends Controller
         return redirect()->route('competitions.index')->with('success', '¡Competition created successfully!');
     }
 
-    public function edit($id): View
+    public function edit(Competition $competition): View
     {
-        $competition = Competition::findOrFail($id);
-
         return view('competitions.edit', compact('competition'));
     }
 
-    public function update(Request $request, $id): RedirectResponse
+    public function update(Request $request, Competition $competition): RedirectResponse
     {
         $competition = Competition::findOrFail($id);
 
