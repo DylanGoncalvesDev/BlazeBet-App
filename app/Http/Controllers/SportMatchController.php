@@ -22,6 +22,13 @@ class SportMatchController extends Controller
         return view('matches.index', compact('matches'));
     }
 
+    public function welcome(): View
+    {
+        $matches = SportMatch::with(['homeTeam', 'awayTeam'])->get();
+
+        return view('welcome', compact('matches'));
+    }
+
     public function show(SportMatch $sportMatch): View
     {
         $sportMatch->load(['homeTeam', 'awayTeam']);

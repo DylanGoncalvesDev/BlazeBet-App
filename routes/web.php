@@ -6,7 +6,7 @@ use App\Http\Controllers\SportMatchController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'welcome')->name('home');
+Route::get('/', [SportMatchController::class, 'welcome'])->name('home');
 Route::get('/matches-filter', [SportMatchController::class, 'filter'])->name('matches.filter');
 
 Route::middleware(['auth', 'admin'])->group(function () {
