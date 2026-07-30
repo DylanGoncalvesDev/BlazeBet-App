@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Competition;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
 class CompetitionController extends Controller
@@ -56,7 +57,7 @@ class CompetitionController extends Controller
                 'required',
                 'string',
                 'max:60',
-                Rule::unique('competitions', 'name')->ignore($competition->id),
+                Rule::unique('competitions', 'name')->ignore($competition->getKey()),
             ],
             'status' => 'required|string|in:not_started,in_progress,finished',
             'description' => 'nullable|string|max:500',
