@@ -83,4 +83,19 @@ class PredictionController extends Controller
 
         return redirect()->back()->with('success', 'La Prediccion se actualizo con exito.');
     }
+
+    public function destroy(Prediction $prediction): RedirectResponse
+    {
+
+        $predictions = $prediction;
+
+        /** @var Prediction $prediction */
+        if ($predictions->user_id !== auth()->id()) {
+            abort(403, 'No tienes permiso para eliminar esta predicción.');
+        }
+
+        $predictions->delete();
+
+        return redirect()->back()->with('danger', 'Predicción eliminada.');
+    }
 }
