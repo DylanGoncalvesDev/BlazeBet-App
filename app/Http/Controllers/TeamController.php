@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Team;
 use Illuminate\Contracts\View\View;
-use Illuminate\Validation\Rule;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class TeamController extends Controller
 {
@@ -46,35 +46,37 @@ class TeamController extends Controller
         return redirect()->route('teams.index')->with('success', '¡Team created successfully!');
     }
 
-    public function edit(Team $team): View {
+    public function edit(Team $team): View
+    {
         return view('teams.edit', compact('team'));
     }
 
-    public function update(Request $request, Team $team): RedirectResponse {
+    public function update(Request $request, Team $team): RedirectResponse
+    {
 
         $request->validate([
             'name' => [
-            'required',
-            'string',
-            'max:50',
-            Rule::unique('teams', 'name')->ignore($team->getKey()), // Usamos getKey() en lugar de ->id
-            ], 
+                'required',
+                'string',
+                'max:50',
+                Rule::unique('teams', 'name')->ignore($team->getKey()), // Usamos getKey() en lugar de ->id
+            ],
             'logo' => 'nullable|string|max:100',
             'country' => 'required|string|max:50',
-            'founded_at' => 'required|integer|min:1800|max:' . date('Y'),
+            'founded_at' => 'required|integer|min:1800|max:'.date('Y'),
             'type' => 'required|string|in:club,national',
-            'sport' => 'required|string|in:american football,soccer football,rugby,basketball,baseball,cricket,softball,volleyball,hockey,handball,futsal'
+            'sport' => 'required|string|in:american football,soccer football,rugby,basketball,baseball,cricket,softball,volleyball,hockey,handball,futsal',
         ]);
-        
+
         $team->update([
             'name' => $request->name,
             'logo' => $request->filled('logo') ? $request->logo : $team->logo,
             'country' => $request->country,
             'founded_at' => $request->founded_at,
             'type' => $request->type,
-            'sport' => $request->sport
+            'sport' => $request->sport,
         ]);
+
         return redirect()->route('teams.index')->with('success', '¡Team updated successfully!');
     }
-
 }
