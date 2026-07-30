@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\CompetitionController;
-use App\Http\Controllers\SportMatchController;
 use App\Http\Controllers\PredictionController;
+use App\Http\Controllers\SportMatchController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 

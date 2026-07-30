@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Prediction extends Model
 {
-     /**
+    /**
      * @var list<string>
      */
     protected $fillable = [
