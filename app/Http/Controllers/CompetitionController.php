@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Competition;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
 class CompetitionController extends Controller
@@ -50,8 +51,14 @@ class CompetitionController extends Controller
 
     public function update(Request $request, Competition $competition): RedirectResponse
     {
+
         $request->validate([
-            'name' => 'required|string|max:60|unique:competitions,name,'.$competition->id,
+            'name' => [
+                'required',
+                'string',
+                'max:60',
+                Rule::unique('competitions', 'name')->ignore($competition->getKey()),
+            ],
             'status' => 'required|string|in:not_started,in_progress,finished',
             'description' => 'nullable|string|max:500',
             'start_date' => 'required|date',
