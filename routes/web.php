@@ -20,7 +20,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('dashboard', 'dashboard')->name('dashboard');
+    Route::get('dashboard', [SportMatchController::class, 'index'])->name('dashboard');
     Route::get('/matches', [SportMatchController::class, 'index'])->name('matches.index');
     Route::get('/matches/{id}', [SportMatchController::class, 'show'])->name('matches.show');
 });
