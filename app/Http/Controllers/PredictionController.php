@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Prediction;
 use App\Models\SportMatch;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -144,5 +145,15 @@ class PredictionController extends Controller
             ->get();
 
         return view('predictions.index', compact('predictions'));
+    }
+
+    public function ranking(): View
+    {
+        $users = User::withSum('predictions as total_points', 'points')
+            ->orderBy('total_points', 'desc')
+            ->take(50)
+            ->get();
+
+        return view('predictions.ranking', compact('users'));
     }
 }
