@@ -1,39 +1,59 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         @include('partials.head')
     </head>
-    <body class="min-h-screen bg-white dark:bg-zinc-800">
-        <flux:sidebar sticky collapsible="mobile" class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+    <body class="min-h-screen bg-white dark:bg-emerald-950">
+        <flux:sidebar sticky collapsible="mobile" class="border-e border-emerald-400 bg-slate-900">
+
             <flux:sidebar.header>
                 <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />
                 <flux:sidebar.collapse class="lg:hidden" />
             </flux:sidebar.header>
 
             <flux:sidebar.nav>
-                <flux:sidebar.group :heading="__('Platform')" class="grid">
-                    <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
-                        {{ __('Dashboard') }}
+
+            @if(auth()->user()->role !== 'admin')
+                <flux:sidebar.group :heading="__('Plataforma')" class="grid">
+
+                    <flux:sidebar.item icon="calendar" :href="route('matches.index')" :current="request()->routeIs('matches.index')">
+                        {{ __('Cartelera de Partidos') }}
                     </flux:sidebar.item>
+
+                    <flux:sidebar.item icon="trophy" :href="route('predictions.index')" :current="request()->routeIs('predictions.index')">
+                        {{ __('Mis Predicciones') }}
+                    </flux:sidebar.item>
+          
                 </flux:sidebar.group>
+            @endif
+
+                @if(auth()->check() && auth()->user()->role === 'admin')
+                    <flux:sidebar.group :heading="__('Administración')" class="grid mt-4 pt-2 border-t border-emerald-400" >
+                        
+                    <flux:sidebar.item icon="plus" :href="route('admin.matches.index')" :current="request()->routeIs('admin.matches.index')">
+                        {{ __('Gestionar Partidos') }}
+                    </flux:sidebar.item>
+
+                    <flux:sidebar.item icon="shield-check" :href="route('teams.index')" :current="request()->routeIs('teams.index')">
+                        {{ __('Gestionar Equipos') }}
+                    </flux:sidebar.item>
+
+                    <flux:sidebar.item icon="trophy" :href="route('competitions.index')" :current="request()->routeIs('competitions.index')">
+                        {{ __('Gestionar Competencias') }}
+                    </flux:sidebar.item>
+
+                    </flux:sidebar.group>
+                @endif
             </flux:sidebar.nav>
+
+
 
             <flux:spacer />
-
-            <flux:sidebar.nav>
-                <flux:sidebar.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                    {{ __('Repository') }}
-                </flux:sidebar.item>
-
-                <flux:sidebar.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                    {{ __('Documentation') }}
-                </flux:sidebar.item>
-            </flux:sidebar.nav>
 
             <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
         </flux:sidebar>
 
-        <!-- Mobile User Menu -->
+       
         <flux:header class="lg:hidden">
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
 
