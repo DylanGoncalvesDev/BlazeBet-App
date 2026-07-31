@@ -69,7 +69,7 @@
                     </div>
                 </div>
             @empty
-                <div class="col-span-full border border-dashed border-zinc-800 p-12 text-center rounded-xl bg-zinc-950">
+                <div class="col-span-full border border-emerald-400 p-12 text-center rounded-xl bg-slate-900">
                     <p class="text-zinc-400 text-sm font-medium">No hay partidos programados en la base de datos.</p>
                 </div>
             @endforelse
