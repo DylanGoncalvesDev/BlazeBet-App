@@ -1,35 +1,29 @@
 <x-layouts::app :title="__('Ranking Global')">
     <div class="max-w-4xl mx-auto flex flex-col gap-5 w-full flex-1 text-zinc-100 font-sans">
         
-        <div class="bg-zinc-950 p-4 border border-zinc-800 rounded-xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="shadow-sm flex flex-col items-center justify-between gap-4">
             <div>
-                <h2 class="font-black text-lg text-white tracking-wide uppercase font-mono">Salón de la Fama - BLAZEBET</h2>
-
+                <h2 class="font-black text-lg text-white tracking-wide uppercase font-mono">Salón de la Fama - PyroBet</h2>
             </div>
-            <div class="bg-zinc-900 border border-zinc-800 px-4 py-2 rounded-lg text-center min-w-[130px]">
-                <span class="block text-[9px] uppercase font-bold text-zinc-500 tracking-wider font-mono">Top Jugadores</span>
-                <span class="text-xs font-black text-emerald-400 font-mono">{{ $users->count() }} Competidores</span>
-            </div>
-        </div>
 
-        <div class="bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden shadow-sm">
+        <div class="w-full bg-slate-950 border border-emerald-400 rounded-xl overflow-hidden shadow-sm">
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
+                <table class="w-full text-left">
                     <thead>
-                        <tr class="border-b border-zinc-800 bg-zinc-900/40 text-[10px] uppercase font-bold text-zinc-400 tracking-widest font-mono">
+                        <tr class="border-b border-emerald-400 bg-gradient-to-bl from-lime-300 to-emerald-400 text-[10px] uppercase font-extrabold text-white tracking-widest">
                             <th class="py-3 px-5 w-16 text-center">Puesto</th>
                             <th class="py-3 px-4">Usuario / Jugador</th>
                             <th class="py-3 px-4">Correo Electrónico</th>
                             <th class="py-3 px-5 text-right w-36">Puntos Totales</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-zinc-900 text-xs text-zinc-300 font-medium">
+                    <tbody class="divide-y divide-emerald-400 text-xs text-white font-medium">
                         @forelse($users as $index => $user)
                             @php
                                 $position = $index + 1;
                             @endphp
 
-                            <tr class="hover:bg-zinc-900/20 transition {{ auth()->id() === $user->id ? 'bg-zinc-900/40 border-y border-zinc-800' : '' }}">
+                            <tr class="{{ auth()->id() === $user->id ? 'bg-slate-950 border-y border-emerald-400' : '' }}">
                                 
                                  <td class="py-3.5 px-5 text-center font-mono font-black">
                                     @if($position === 1)
@@ -43,23 +37,23 @@
                                     @endif
                                 </td>
 
-                                <td class="py-3.5 px-4 font-bold text-zinc-100 flex items-center gap-2">
+                                <td class="py-3.5 px-4 font-bold text-white flex items-center gap-2">
                                     <span class="uppercase tracking-wide">{{ $user->name }}</span>
                                     @if(auth()->id() === $user->id)
                                         <span class="text-[9px] font-black font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-900/40 px-1.5 py-0.5 rounded uppercase">Tú</span>
                                     @endif
                                 </td>
 
-                                <td class="py-3.5 px-4 font-mono text-zinc-500">{{ $user->email }}</td>
+                                <td class="py-3.5 px-4 font-mono text-white">{{ $user->email }}</td>
 
                                 <td class="py-3.5 px-5 text-right font-mono font-black text-sm text-emerald-400">
-                                    {{ $user->total_points ?? 0 }} <span class="text-[9px] font-bold text-zinc-600 uppercase ml-0.5 font-sans">PTS</span>
+                                    {{ $user->total_points ?? 0 }} <span class="text-[9px] font-bold text-white uppercase ml-0.5 font-sans">PTS</span>
                                 </td>
 
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="py-12 text-center text-zinc-500 font-medium border-dashed border border-zinc-900 rounded-b-xl">
+                                <td colspan="4" class="py-12 text-center text-white font-medium border-dashed border border-emerald-400 rounded-b-xl">
                                     No hay registros de puntuación disponibles en la base de datos de SQLite.
                                 </td>
                             </tr>

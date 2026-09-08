@@ -60,7 +60,7 @@ class TeamController extends Controller
                 'required',
                 'string',
                 'max:50',
-                Rule::unique('teams', 'name')->ignore($team->getKey()), // Usamos getKey() en lugar de ->id
+                Rule::unique('teams', 'name')->ignore($team->getKey()),
             ],
             'logo' => 'nullable|string|max:100',
             'country' => 'required|string|max:50',
