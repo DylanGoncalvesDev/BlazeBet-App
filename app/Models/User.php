@@ -58,6 +58,9 @@ class User extends Authenticatable
             : $initials;
     }
 
+    /**
+     * @return HasMany<Prediction, $this>
+     */
     public function predictions(): HasMany
     {
         return $this->hasMany(Prediction::class, 'user_id');
