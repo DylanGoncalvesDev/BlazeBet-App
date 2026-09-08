@@ -90,7 +90,7 @@ new #[Title('Security settings')] class extends Component {
             />
 
             <div class="flex items-center gap-4">
-                <flux:button variant="primary" type="submit" data-test="update-password-button">
+                <flux:button variant="primary" type="submit" class="shadow-[-1px_4px_0_#047857] bg-gradient-to-b from-lime-300 to-emerald-400 hover:from-lime-300/80 hover:to-emerald-400/80 text-white" data-test="update-password-button">
                     {{ __('Save') }}
                 </flux:button>
             </div>

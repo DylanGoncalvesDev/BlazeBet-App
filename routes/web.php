@@ -16,9 +16,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/matches/create', [SportMatchController::class, 'create'])->name('matches.create');
     Route::post('/matches', [SportMatchController::class, 'store'])->name('matches.store');
 
-    Route::get('/matches/{id}/edit', [SportMatchController::class, 'edit'])->name('matches.edit');
-    Route::put('/matches/{id}', [SportMatchController::class, 'update'])->name('matches.update');
-    Route::delete('/matches/{id}', [SportMatchController::class, 'destroy'])->name('matches.destroy');
+    Route::get('/matches/{sportMatch}/edit', [SportMatchController::class, 'edit'])->name('matches.edit');
+    Route::put('/matches/{sportMatch}', [SportMatchController::class, 'update'])->name('matches.update');
+    Route::delete('/matches/{sportMatch}', [SportMatchController::class, 'destroy'])->name('matches.destroy');
 
     Route::resource('competitions', CompetitionController::class);
     Route::resource('teams', TeamController::class);
@@ -27,7 +27,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [SportMatchController::class, 'index'])->name('dashboard');
     Route::get('/matches', [SportMatchController::class, 'index'])->name('matches.index');
-    Route::get('/matches/{id}', [SportMatchController::class, 'show'])->name('matches.show');
+    Route::get('/matches/{sportMatch}', [SportMatchController::class, 'show'])->name('matches.show');
 
     Route::resource('predictions', PredictionController::class);
     Route::get('/predictions-filter', [PredictionController::class, 'filter'])->name('predictions.filter');
