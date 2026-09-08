@@ -3,15 +3,23 @@
 ])
 
 @if($sidebar)
-    <flux:sidebar.brand :name="config('app.name', 'Laravel')" {{ $attributes }}>
-        <x-slot name="logo" class="flex aspect-square size-8 items-center justify-center rounded-md bg-accent-content text-accent-foreground">
-            <x-app-logo-icon class="size-5 fill-current text-white dark:text-black" />
-        </x-slot>
-    </flux:sidebar.brand>
+    <div class="flex items-center gap-3 h-10">
+      <div class="relative w-12 h-10 flex items-center">
+         <x-app-logo-icon class="absolute top-1/2 -translate-y-1/2 left-0 size-13 object-contain block z-10" />
+      </div>
+
+      <span class="drop-shadow-[0_2px_0_rgba(60,150,90,1)] text-2xl font-bold bg-gradient-to-b from-lime-300 to-emerald-400 bg-clip-text text-transparent">
+            {{ config('app.name', 'Laravel') }}
+      </span>
+    </div>
 @else
-    <flux:brand :name="config('app.name', 'Laravel')" {{ $attributes }}>
-        <x-slot name="logo" class="flex aspect-square size-8 items-center justify-center rounded-md bg-accent-content text-accent-foreground">
-            <x-app-logo-icon class="size-5 fill-current text-white dark:text-black" />
-        </x-slot>
-    </flux:brand>
+    <div class="flex items-center gap-3 h-10">
+      <div class="relative w-12 h-10 flex items-center">
+         <x-app-logo-icon class="absolute top-1/2 -translate-y-1/2 left-0 size-13 object-contain block z-10" />
+      </div>
+
+      <span class="drop-shadow-[0_2px_0_rgba(60,150,90,1)] text-2xl font-bold bg-gradient-to-b from-lime-300 to-emerald-400 bg-clip-text text-transparent">
+            {{ config('app.name', 'Laravel') }}
+      </span>
+    </div>
 @endif
