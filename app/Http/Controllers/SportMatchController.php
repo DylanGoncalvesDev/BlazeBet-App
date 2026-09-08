@@ -38,7 +38,7 @@ class SportMatchController extends Controller
 
     public function show(SportMatch $sportMatch): View
     {
-        $sportMatch->load(['homeTeam', 'awayTeam']);
+        $sportMatch->load(['homeTeam', 'awayTeam','competition']);
 
         return view('matches.show', compact('sportMatch'));
     }
@@ -116,7 +116,7 @@ class SportMatchController extends Controller
             'competition_id' => $request->competition_id,
         ]);
 
-        return redirect()->back()->with('success', 'The Match has been updated successfuly');
+        return redirect()->route('admin.matches.index')->with('success', 'The Match has been updated successfuly');
     }
 
     public function destroy(SportMatch $sportMatch): RedirectResponse
