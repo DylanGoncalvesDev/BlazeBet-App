@@ -38,7 +38,7 @@ class SportMatchController extends Controller
 
     public function show(SportMatch $sportMatch): View
     {
-        $sportMatch->load(['homeTeam', 'awayTeam','competition']);
+        $sportMatch->load(['homeTeam', 'awayTeam', 'competition']);
 
         return view('matches.show', compact('sportMatch'));
     }

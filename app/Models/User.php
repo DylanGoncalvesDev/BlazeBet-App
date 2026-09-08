@@ -58,8 +58,8 @@ class User extends Authenticatable
             : $initials;
     }
 
-     public function predictions():HasMany
+    public function predictions(): HasMany
     {
-        return $this->hasMany(\App\Models\Prediction::class, 'user_id');
+        return $this->hasMany(Prediction::class, 'user_id');
     }
 }
