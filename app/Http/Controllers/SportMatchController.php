@@ -161,7 +161,7 @@ class SportMatchController extends Controller
             }
         }
 
-        return redirect()->route('admin.matches.index')->with('success', 'The Match has been updated successfully and points have been distributed!');
+        return redirect()->route('admin.matches.index')->with('success', 'The Match has been updated successfully');
     }
 
     public function destroy(SportMatch $sportMatch): RedirectResponse
