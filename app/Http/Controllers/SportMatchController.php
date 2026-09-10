@@ -103,6 +103,10 @@ class SportMatchController extends Controller
             'competition_id' => 'required|exists:competitions,id',
         ]);
 
+        if (in_array($request->status, ['live', 'finished']) && strtotime($sportMatch->date) > time()) {
+            return redirect()->back()->withInput()->with('danger', 'Error: the match has not yet reached its scheduled date.');
+        }
+
         $sportMatch->update([
             'home_team_id' => $request->home_team_id,
             'away_team_id' => $request->away_team_id,
@@ -116,7 +120,48 @@ class SportMatchController extends Controller
             'competition_id' => $request->competition_id,
         ]);
 
-        return redirect()->route('admin.matches.index')->with('success', 'The Match has been updated successfuly');
+        if ($request->status === 'finished') {
+            $predictions = $sportMatch->predictions;
+
+            foreach ($predictions as $prediction) {
+                $earnedPoints = 0;
+                $result = 'draw';
+                if ($request->home_team_score > $request->away_team_score) {
+                    $result = 'home';
+                } elseif ($request->home_team_score < $request->away_team_score) {
+                    $result = 'away';
+                }
+
+                $hitResult = ($prediction->prediction === $result);
+
+                if ($hitResult && $prediction->home_score_prediction == $request->home_team_score && $prediction->away_score_prediction == $request->away_team_score) {
+                    $earnedPoints = 8;
+                    $prediction->status = 'correct';
+                } elseif ($prediction->home_score_prediction == $request->home_team_score && $prediction->away_score_prediction == $request->away_team_score) {
+                    $earnedPoints = 6;
+                    $prediction->status = 'correct';
+                } elseif ($hitResult && ($prediction->home_score_prediction == $request->home_team_score || $prediction->away_score_prediction == $request->away_team_score)) {
+                    $earnedPoints = 4;
+                    $prediction->status = 'correct';
+                } elseif ($prediction->home_score_prediction == $request->home_team_score || $prediction->away_score_prediction == $request->away_team_score) {
+                    $earnedPoints = 2;
+                    $prediction->status = 'correct';
+                } elseif ($hitResult) {
+                    $earnedPoints = 1;
+                    $prediction->status = 'correct';
+                } else {
+                    $earnedPoints = 0;
+                    $prediction->status = 'incorrect';
+                }
+
+                $prediction->update([
+                    'points' => $earnedPoints,
+                    'status' => $prediction->status,
+                ]);
+            }
+        }
+
+        return redirect()->route('admin.matches.index')->with('success', 'The Match has been updated successfully');
     }
 
     public function destroy(SportMatch $sportMatch): RedirectResponse
