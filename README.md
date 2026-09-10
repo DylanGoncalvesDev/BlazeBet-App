@@ -74,6 +74,10 @@ Sigue estos pasos para levantar el entorno de desarrollo en tu computadora de fo
    ```bash
    cp .env.example .env
    ```
+   Genera la llave secreta de seguridad e encriptación obligatoria para evitar el error `MissingAppKeyException`:
+    ```bash
+   php artisan key:generate
+   ```
    Abre el archivo `.env` y edita la tercera línea para asignar el nombre corporativo oficial:
    ```env
    APP_NAME="PyroBet App"
