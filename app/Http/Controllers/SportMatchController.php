@@ -148,7 +148,7 @@ class SportMatchController extends Controller
                 } elseif ($hitHomeScore || $hitAwayScore) {
                     $earnedPoints = 2;
                     $prediction->status = 'correct';
-                } elseif ($hitResult && ! $hitHomeScore && ! $hitAwayScore) {
+                } elseif ($hitResult) {
                     $earnedPoints = 1;
                     $prediction->status = 'correct';
                 } else {
