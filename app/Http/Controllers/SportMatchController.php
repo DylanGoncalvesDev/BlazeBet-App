@@ -133,19 +133,17 @@ class SportMatchController extends Controller
                 }
 
                 $hitResult = ($prediction->prediction === $result);
-                $hitHomeScore = ($prediction->home_score_prediction == $request->home_team_score);
-                $hitAwayScore = ($prediction->away_score_prediction == $request->away_team_score);
 
-                if ($hitResult && $hitHomeScore && $hitAwayScore) {
+                if ($hitResult && $prediction->home_score_prediction == $request->home_team_score && $prediction->away_score_prediction == $request->away_team_score) {
                     $earnedPoints = 8;
                     $prediction->status = 'correct';
-                } elseif ($hitHomeScore && $hitAwayScore) {
+                } elseif ($prediction->home_score_prediction == $request->home_team_score && $prediction->away_score_prediction == $request->away_team_score) {
                     $earnedPoints = 6;
                     $prediction->status = 'correct';
-                } elseif ($hitHomeScore || $hitAwayScore) {
+                } elseif ($hitResult && ($prediction->home_score_prediction == $request->home_team_score || $prediction->away_score_prediction == $request->away_team_score)) {
                     $earnedPoints = 4;
                     $prediction->status = 'correct';
-                } elseif ($hitHomeScore || $hitAwayScore) {
+                } elseif ($prediction->home_score_prediction == $request->home_team_score || $prediction->away_score_prediction == $request->away_team_score) {
                     $earnedPoints = 2;
                     $prediction->status = 'correct';
                 } elseif ($hitResult) {
